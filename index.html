@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#136f63">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Body Daily">
+    <title>Body Daily</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="icon" href="assets/icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">ติดตามทุกเช้า</p>
+          <h1>Body Daily</h1>
+        </div>
+        <button class="icon-button" id="installButton" type="button" title="ติดตั้งแอป" hidden>↓</button>
+      </header>
+
+      <main>
+        <section class="checkin-panel" aria-labelledby="checkinTitle">
+          <div class="checkin-copy">
+            <p class="eyebrow">วันนี้</p>
+            <h2 id="checkinTitle">บันทึกน้ำหนักเช้านี้</h2>
+            <p id="dailyMessage">บันทึกทุกเช้า แล้วดูขึ้น/ลงกับแนวโน้มทันที</p>
+          </div>
+          <form id="weightForm" class="weight-form">
+            <label for="weightInput">น้ำหนักเช้านี้</label>
+            <div class="input-row">
+              <input id="weightInput" type="number" min="20" max="300" step="0.1" inputmode="decimal" placeholder="เช่น 72.4" required>
+              <span>kg</span>
+            </div>
+            <label for="noteInput">โน้ตสั้นๆ</label>
+            <input id="noteInput" type="text" maxlength="80" placeholder="นอนดี, กินเค็ม, ออกกำลัง">
+            <button class="primary-button" type="submit">บันทึกวันนี้</button>
+          </form>
+        </section>
+
+        <section class="stats-grid" aria-label="สรุปน้ำหนัก">
+          <article class="stat-card"><p>ล่าสุด</p><strong id="latestWeight">--</strong><span id="latestDate">ยังไม่มีข้อมูล</span></article>
+          <article class="stat-card"><p>เปลี่ยนจากเมื่อวาน</p><strong id="dailyChange">--</strong><span id="dailyChangeText">รอบันทึกอย่างน้อย 2 วัน</span></article>
+          <article class="stat-card"><p>แนวโน้ม 7 วัน</p><strong id="weeklyTrend">--</strong><span id="weeklyTrendText">ข้อมูลจะนิ่งขึ้นเมื่อบันทึกต่อเนื่อง</span></article>
+          <article class="stat-card"><p>สตรีค</p><strong id="streakCount">0 วัน</strong><span id="streakText">บันทึกทุกเช้าเพื่อรักษาสตรีค</span></article>
+        </section>
+
+        <section class="workspace-grid">
+          <div class="panel chart-panel">
+            <div class="section-heading">
+              <div><p class="eyebrow">กราฟ</p><h2>น้ำหนักย้อนหลัง</h2></div>
+              <select id="rangeSelect" aria-label="ช่วงกราฟ">
+                <option value="7">7 วัน</option><option value="14">14 วัน</option><option value="30" selected>30 วัน</option><option value="90">90 วัน</option>
+              </select>
+            </div>
+            <canvas id="weightChart" width="760" height="360" aria-label="กราฟน้ำหนักย้อนหลัง"></canvas>
+          </div>
+
+          <aside class="panel advice-panel">
+            <div class="section-heading"><div><p class="eyebrow">แนะนำ</p><h2>โค้ชส่วนตัว</h2></div></div>
+            <div id="adviceList" class="advice-list"></div>
+          </aside>
+        </section>
+
+        <section class="workspace-grid">
+          <div class="panel challenge-panel">
+            <div class="section-heading"><div><p class="eyebrow">Challenge</p><h2>ท้าทายตัวเอง</h2></div></div>
+            <form id="challengeForm" class="challenge-form">
+              <label for="goalInput">เป้าหมายน้ำหนัก</label>
+              <div class="input-row"><input id="goalInput" type="number" min="20" max="300" step="0.1" inputmode="decimal" placeholder="เช่น 68.0"><span>kg</span></div>
+              <label for="deadlineInput">กำหนดวัน</label>
+              <input id="deadlineInput" type="date">
+              <button class="secondary-button" type="submit">ตั้ง Challenge</button>
+            </form>
+            <div id="challengeStatus" class="challenge-status"></div>
+          </div>
+
+          <div class="panel history-panel">
+            <div class="section-heading">
+              <div><p class="eyebrow">บันทึก</p><h2>ประวัติล่าสุด</h2></div>
+              <div class="tool-actions">
+                <button class="icon-button" id="exportButton" type="button" title="ส่งออกข้อมูล">↗</button>
+                <label class="icon-button file-button" title="นำเข้าข้อมูล">↙<input id="importInput" type="file" accept="application/json"></label>
+              </div>
+            </div>
+            <div id="historyList" class="history-list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="app.js" defer></script>
+  </body>
+</html>
